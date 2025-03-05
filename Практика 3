@@ -1,0 +1,28 @@
+#include <regex>
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "Russian"); 
+    string text;
+    cout << "Введите строку: ";
+    getline(cin, text); 
+
+    // Регулярное выражение для поиска email-адресов
+    regex email_pattern(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
+    smatch matches; 
+
+    bool found = false; 
+    while (regex_search(text, matches, email_pattern)) {
+        cout << "Найден email: " << matches[0] << endl; 
+        text = matches.suffix(); 
+        found = true; 
+    }
+
+    if (!found) { 
+        cout << "Email-адреса не найдены." << endl;
+    }
+
+    return 0;
+}
